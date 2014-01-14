@@ -1,14 +1,18 @@
 #include "linkedlist.h"
 
 int Count(struct node* head, int search_for);
+int get_nth(struct node* head, int position);
+void delete_list(struct node** head);
 
 void main()
 {
 	struct node* head = BuildOneTwoThree();
 	print_list(head);
 //	int count = Count(head, 2);
-	int count = get_nth(head, 0);
-	printf("Count is: %d\n", count);
+//	int count = get_nth(head, 0);
+//	printf("Count is: %d\n", count);
+	delete_list(&head);
+	print_list(head);
 }
 
 int Count(struct  node* head, int search_for)
@@ -43,4 +47,19 @@ int get_nth(struct node* head, int position)
 	}
 	data = current->data;
 	return data;
+}
+
+void delete_list(struct node** head)
+{
+	struct node* current = *head;
+	struct node* to_free;
+
+	while(current!=NULL)
+	{
+		to_free = current;
+		current = current->next;
+		free(to_free);
+	}
+	*head = NULL;
+	return;
 }
