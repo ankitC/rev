@@ -39,6 +39,12 @@ int list_length(struct node* head)
 	struct node* current = head;
 
 	while(current!=NULL)
+	{
+		count++;
+		current = current->next;
+	}
+	return count;
+}
 
 void print_list(struct node* head)
 {
