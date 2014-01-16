@@ -9,6 +9,9 @@ void insert_nth(struct node** headRef, int pos, int element);
 void sorted_insert(struct node** headRef, struct node* new_node);
 void insert_sort(struct node** headRef);
 void append(struct node** a, struct node** b);
+void front_back_split(struct node* source, struct node** frontRef, struct node** backRef);
+void remove_duplicates(struct node* head);
+void move_node(struct node** dest, struct node** source);
 
 void main()
 {
@@ -64,12 +67,42 @@ void main()
 	insert_sort(&head);
 	print_list(head);
 #endif
+
+#ifdef APPEND	
 	struct node* head1 = BuildOneTwoThree();
 	insert_nth(&head1,0,10);
 	print_list(head1);
 	append(&head,&head1);
 	print_list(head);
 	print_list(head1);
+#endif
+
+#ifdef SPLIT_FRONT_BACK
+	struct node* new_node5 = (struct node*) malloc(sizeof(struct node));
+	new_node5->data = 30;
+	sorted_insert(&head, new_node5);
+	struct node* new_node6 = (struct node*) malloc(sizeof(struct node));
+	new_node6->data = 10;
+	sorted_insert(&head, new_node6);
+
+	struct node* head1 = NULL;
+	struct node* head2=NULL;
+	front_back_split(head, &head1, &head2);
+	print_list(head1);
+	print_list(head2);
+#endif
+#ifdef REMOVE_DUPLICATES
+	struct node* new_node5 = (struct node*) malloc(sizeof(struct node));
+	new_node5->data = 2;
+	sorted_insert(&head, new_node5);
+	struct node* new_node6 = (struct node*) malloc(sizeof(struct node));
+	new_node6->data = 1;
+	sorted_insert(&head, new_node6);
+	print_list(head1);
+	remove_duplicates(head1);
+	print_list(head1);
+#endif
+
 }
 
 int Count(struct  node* head, int search_for)
@@ -233,4 +266,43 @@ void append(struct node** a, struct node** b)
 		current = current->next;
 	current->next = *b;
 		*b = NULL;
+}
+
+void front_back_split(struct node* source, struct node** frontRef, struct node** backRef)
+{
+	if(source == NULL)
+	{
+		*frontRef = NULL;
+		*backRef = NULL;
+		return;
+	}
+	*frontRef = source;
+	int length = list_length(source);
+	int i = 0;
+	for(i = 0; i<(length-length/2)-1; i++)
+		source = source->next;
+	*backRef = source->next;
+	source->next = NULL;
+}
+
+void remove_duplicates(struct node* head)
+{
+	if(head == NULL||head->next == NULL)
+		return;
+	struct node* current = head;
+	struct node* next_node = head->next;
+	struct node* to_free = NULL;
+	do
+	{
+		if(current->data == next_node->data)
+		{
+			to_free = next_node;
+			next_node = next_node->next;
+			current->next = next_node;
+			free(to_free);
+			continue;
+		}
+		current=current->next;
+		next_node = next_node->next;
+	}while(next_node!=NULL);
 }
