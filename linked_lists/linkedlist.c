@@ -13,7 +13,7 @@ void front_back_split(struct node* source, struct node** frontRef, struct node**
 void remove_duplicates(struct node* head);
 void move_node(struct node** dest, struct node** source);
 void alternating_split(struct node* source, struct node** aRef, struct node** bRef);
-
+struct node* shuffle_merge(struct node* a, struct node* b);
 void main()
 {
 	struct node* head = BuildOneTwoThree();
@@ -115,11 +115,25 @@ void main()
 	print_list(b);
 #endif
 
+#ifdef ALTERNATING_SPLIT
 	struct node* a = NULL;
 	struct node* b = NULL;
 	alternating_split(head, &a, &b);
 	print_list(a);
 	print_list(b);
+#endif
+	struct node* a = BuildOneTwoThree();
+	struct node* b = BuildOneTwoThree();
+	insert_nth(&a,0,10);
+//	insert_nth(&b,1,20);
+	insert_nth(&a,3,14);
+//	insert_nth(&b,4,78);
+	insert_nth(&a,1,32);
+//	insert_nth(&b,3,42);
+	print_list(a);
+	print_list(b);
+	struct node* c = shuffle_merge(a,b);
+	print_list(c);
 }
 
 int Count(struct  node* head, int search_for)
@@ -345,5 +359,31 @@ void alternating_split(struct node* source, struct node** aRef, struct node** bR
 		move_node(aRef, &source);
 		if(source!=NULL)
 			move_node(bRef, &source);
+	}
+}
+
+struct node* shuffle_merge(struct node* a, struct node* b)
+{
+	struct node* returned;
+	if(a == NULL && b == NULL)
+		return NULL;
+	else if(a == NULL && b!=NULL)
+	{
+		returned = shuffle_merge(NULL, b->next);
+		b->next = returned;
+		return b;
+	}
+	else if(a!=NULL && b==NULL)
+	{
+		returned = shuffle_merge(a->next, NULL);
+		a->next = returned;
+		return a;
+	}
+	else if(a!=NULL && b!=NULL) //I knw its a redundant statement!!
+	{
+		returned = shuffle_merge(a->next, b->next);
+		b->next = returned;
+		a->next = b;
+		return a;
 	}
 }
