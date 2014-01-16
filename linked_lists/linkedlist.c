@@ -12,6 +12,7 @@ void append(struct node** a, struct node** b);
 void front_back_split(struct node* source, struct node** frontRef, struct node** backRef);
 void remove_duplicates(struct node* head);
 void move_node(struct node** dest, struct node** source);
+void alternating_split(struct node* source, struct node** aRef, struct node** bRef);
 
 void main()
 {
@@ -103,12 +104,20 @@ void main()
 	print_list(head1);
 #endif
 
+#ifdef MOV_NODE
 	struct node* a = BuildOneTwoThree();
 	struct node* b = BuildOneTwoThree();
 	print_list(a);
 	print_list(b);
 
 	move_node(&a,&b);
+	print_list(a);
+	print_list(b);
+#endif
+
+	struct node* a = NULL;
+	struct node* b = NULL;
+	alternating_split(head, &a, &b);
 	print_list(a);
 	print_list(b);
 }
@@ -317,11 +326,24 @@ void remove_duplicates(struct node* head)
 
 void move_node(struct node** dest, struct node** src)
 {
-	if(*dest == NULL || *src ==NULL)
+	if(*src == NULL)
 		return;
 	struct node* temp = *src;
 	*src = (*src)->next;
 
 	temp->next = *dest;
 	*dest = temp;
+}
+
+
+void alternating_split(struct node* source, struct node** aRef, struct node** bRef)
+{
+	*aRef = NULL;
+	*bRef = NULL;
+	while(source!=NULL)
+	{
+		move_node(aRef, &source);
+		if(source!=NULL)
+			move_node(bRef, &source);
+	}
 }
