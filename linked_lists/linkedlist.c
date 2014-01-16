@@ -8,6 +8,7 @@ int pop(struct node** headRef);
 void insert_nth(struct node** headRef, int pos, int element);
 void sorted_insert(struct node** headRef, struct node* new_node);
 void insert_sort(struct node** headRef);
+void append(struct node** a, struct node** b);
 
 void main()
 {
@@ -52,6 +53,7 @@ void main()
 	print_list(head);
 #endif
 
+#ifdef INSERT_SORT
 	insert_nth(&head,0,10);
 	insert_nth(&head,1,20);
 	insert_nth(&head,3,14);
@@ -61,7 +63,13 @@ void main()
 	print_list(head);
 	insert_sort(&head);
 	print_list(head);
-
+#endif
+	struct node* head1 = BuildOneTwoThree();
+	insert_nth(&head1,0,10);
+	print_list(head1);
+	append(&head,&head1);
+	print_list(head);
+	print_list(head1);
 }
 
 int Count(struct  node* head, int search_for)
@@ -207,4 +215,22 @@ void insert_sort(struct node** headRef)
 	}
 
 	*headRef = new_head;
+}
+
+void append(struct node** a, struct node** b)
+{
+	if(*b == NULL)
+		return;
+	if(*a == NULL)
+	{
+		*a = *b;
+		*b = NULL;
+		return;
+	}
+
+	struct node* current = *a;
+	while(current->next!=NULL)
+		current = current->next;
+	current->next = *b;
+		*b = NULL;
 }
