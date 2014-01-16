@@ -103,6 +103,14 @@ void main()
 	print_list(head1);
 #endif
 
+	struct node* a = BuildOneTwoThree();
+	struct node* b = BuildOneTwoThree();
+	print_list(a);
+	print_list(b);
+
+	move_node(&a,&b);
+	print_list(a);
+	print_list(b);
 }
 
 int Count(struct  node* head, int search_for)
@@ -305,4 +313,15 @@ void remove_duplicates(struct node* head)
 		current=current->next;
 		next_node = next_node->next;
 	}while(next_node!=NULL);
+}
+
+void move_node(struct node** dest, struct node** src)
+{
+	if(*dest == NULL || *src ==NULL)
+		return;
+	struct node* temp = *src;
+	*src = (*src)->next;
+
+	temp->next = *dest;
+	*dest = temp;
 }
