@@ -1,0 +1,26 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BuildOneTwoThree	linkedlist.h	/^struct node* BuildOneTwoThree()$/;"	f
+Count	linkedlist.c	/^int Count(struct  node* head, int search_for)$/;"	f
+Push	linkedlist.h	/^void Push(struct node** headRef, int newData)$/;"	f
+_LH_H_	linkedlist.h	2;"	d
+data	linkedlist.h	/^	int data;$/;"	m	struct:node
+delete_list	linkedlist.c	/^void delete_list(struct node** head)$/;"	f
+get_nth	linkedlist.c	/^int get_nth(struct node* head, int position)$/;"	f
+head	linkedlist.h	/^	node_t* head;$/;"	m	struct:linked_list
+insert_nth	linkedlist.c	/^void insert_nth(struct node** headRef, int pos, int element)$/;"	f
+insert_sort	linkedlist.c	/^void insert_sort(struct node** headRef)$/;"	f
+linked_list	linkedlist.h	/^typedef struct linked_list$/;"	s
+linked_list_t	linkedlist.h	/^}linked_list_t;$/;"	t	typeref:struct:linked_list
+list_length	linkedlist.h	/^int list_length(struct node* head)$/;"	f
+main	linkedlist.c	/^void main()$/;"	f
+next	linkedlist.h	/^	struct node* next;$/;"	m	struct:node	typeref:struct:node::node
+node	linkedlist.h	/^typedef struct node$/;"	s
+node_t	linkedlist.h	/^}node_t;$/;"	t	typeref:struct:node
+pop	linkedlist.c	/^int pop(struct node** headRef)$/;"	f
+print_list	linkedlist.h	/^void print_list(struct node* head)$/;"	f
+sorted_insert	linkedlist.c	/^void sorted_insert(struct node** headRef, struct node* new_node)$/;"	f

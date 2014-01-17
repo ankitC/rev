@@ -14,6 +14,9 @@ void remove_duplicates(struct node* head);
 void move_node(struct node** dest, struct node** source);
 void alternating_split(struct node* source, struct node** aRef, struct node** bRef);
 struct node* shuffle_merge(struct node* a, struct node* b);
+struct node* sorted_merge(struct node* a, struct node* b);
+void merge_sort(struct node** headRef);
+
 void main()
 {
 	struct node* head = BuildOneTwoThree();
@@ -122,18 +125,50 @@ void main()
 	print_list(a);
 	print_list(b);
 #endif
+
+#ifdef SHUFFLE_MERGE
 	struct node* a = BuildOneTwoThree();
 	struct node* b = BuildOneTwoThree();
-	insert_nth(&a,0,10);
-//	insert_nth(&b,1,20);
-	insert_nth(&a,3,14);
-//	insert_nth(&b,4,78);
-	insert_nth(&a,1,32);
-//	insert_nth(&b,3,42);
 	print_list(a);
 	print_list(b);
 	struct node* c = shuffle_merge(a,b);
 	print_list(c);
+#endif
+
+#ifdef SORTED_MERGE
+	struct node* a = BuildOneTwoThree();
+	struct node* b = BuildOneTwoThree();
+	struct node* new_node1 = (struct node*) malloc(sizeof(struct node));
+	new_node1->data = 13;
+	sorted_insert(&a, new_node1);
+	struct node* new_node2 = (struct node*) malloc(sizeof(struct node));
+	new_node2->data = 0;
+	sorted_insert(&b, new_node2);
+	struct node* new_node3 = (struct node*) malloc(sizeof(struct node));
+	new_node3->data = 8;
+	sorted_insert(&a, new_node3);
+	struct node* new_node4 = (struct node*) malloc(sizeof(struct node));
+	new_node4->data = 4;
+	sorted_insert(&a, new_node4);
+	struct node* new_node5 = (struct node*) malloc(sizeof(struct node));
+	new_node5->data = 30;
+	sorted_insert(&b, new_node5);
+	print_list(a);
+	print_list(b);
+	struct node* c = sorted_merge(a,b);
+	print_list(c);
+#endif
+	insert_nth(&head,0,10);
+	insert_nth(&head,1,20);
+	insert_nth(&head,3,14);
+	insert_nth(&head,4,78);
+	insert_nth(&head,1,32);
+	insert_nth(&head,3,42);
+	print_list(head);
+	merge_sort(&head);
+//	print_list(head);
+
+
 }
 
 int Count(struct  node* head, int search_for)
@@ -386,4 +421,61 @@ struct node* shuffle_merge(struct node* a, struct node* b)
 		a->next = b;
 		return a;
 	}
+}
+
+struct node* sorted_merge(struct node* a, struct node* b)
+{
+	struct node* returned = NULL;
+	if(a==NULL && b==NULL)
+		return NULL;
+	else if(a!=NULL && b==NULL)
+	{
+		returned = sorted_merge(a->next, NULL);
+		move_node(&returned, &a);
+	}
+	else if(a==NULL && b!=NULL)
+	{
+		returned = sorted_merge(NULL, b->next);
+		move_node(&returned, &b);
+	}
+	else if(a!=NULL && b!=NULL)
+	{
+		if(b->data <= a->data)
+		{
+			returned = sorted_merge(a, b->next);
+			b->next == NULL;
+			move_node(&returned,&b);
+			//a->next == NULL;
+			//move_node(&returned,&a);
+		}
+		else
+		{
+			returned = sorted_merge(a->next, b);
+			a->next == NULL;
+			move_node(&returned,&a);
+			//b->next == NULL;
+			//move_node(&returned,&b);
+		}
+	}
+	return returned;
+}
+
+void merge_sort(struct node** headRef)
+{
+	struct node* part1 = NULL;
+	struct node* part2 = NULL;
+
+	print_list(*headRef);
+	if((*headRef)->next == NULL)
+		return;
+	front_back_split(*headRef,&part1,&part2);
+	if(part1!=NULL)
+		merge_sort(&part1);
+	print_list(part1);
+	if(part2!=NULL)
+		merge_sort(&part2);
+	print_list(part2);
+	*headRef = sorted_merge(part1,part2);
+	print_list(*headRef);
+	return;
 }
