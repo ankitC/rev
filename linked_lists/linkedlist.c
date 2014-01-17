@@ -16,6 +16,7 @@ void alternating_split(struct node* source, struct node** aRef, struct node** bR
 struct node* shuffle_merge(struct node* a, struct node* b);
 struct node* sorted_merge(struct node* a, struct node* b);
 void merge_sort(struct node** headRef);
+void reverse(struct node** headRef);
 
 void main()
 {
@@ -158,6 +159,8 @@ void main()
 	struct node* c = sorted_merge(a,b);
 	print_list(c);
 #endif
+
+#ifdef MERGE_SORT
 	insert_nth(&head,0,10);
 	insert_nth(&head,1,20);
 	insert_nth(&head,3,14);
@@ -167,7 +170,16 @@ void main()
 	print_list(head);
 	merge_sort(&head);
 //	print_list(head);
-
+#endif
+	insert_nth(&head,0,10);
+	insert_nth(&head,1,20);
+	insert_nth(&head,3,14);
+	insert_nth(&head,4,78);
+	insert_nth(&head,1,32);
+	insert_nth(&head,3,42);
+	print_list(head);
+	reverse(&head);
+	print_list(head);
 
 }
 
@@ -478,4 +490,39 @@ void merge_sort(struct node** headRef)
 	*headRef = sorted_merge(part1,part2);
 	print_list(*headRef);
 	return;
+}
+
+void reverse(struct node** headRef)
+{
+	struct node* current = *headRef;
+	struct node* previous = NULL;
+	struct node* next;
+
+	previous = current;
+	if(current == NULL || current->next == NULL)
+		return;
+
+	current = current->next;
+	if(current->next == NULL)
+	{
+		current->next = previous;
+		previous->next == NULL;
+		*headRef = current;
+		return;
+	}
+	next = current->next;
+
+	while(next->next!= NULL)
+	{
+		current->next = previous;
+		previous = current;
+		current = next;
+		next = next->next;
+	}
+//	while(next->next!=NULL);
+
+	current->next = previous;
+	next->next=current;
+	(*headRef)->next = NULL;
+	*headRef = next;
 }
