@@ -3,6 +3,7 @@
 #define MAXLENGTH 10
 
 void bubble_sort(int a[], int length);
+void selection_sort(int a[], int length);
 
 void main()
 {
@@ -10,9 +11,28 @@ void main()
 	generate_array(a, MAXLENGTH);
 	print_array(a,MAXLENGTH);
 	printf("sorting...\n");
-	bubble_sort(a, MAXLENGTH);
+	selection_sort(a, MAXLENGTH);
 	print_array(a,MAXLENGTH);
 	return;
+}
+
+void selection_sort(int a[], int length)
+{
+	int i, j, temp;
+	int min;
+
+	for(i=0; i<length; i++)
+	{
+		min = i;
+		for(j=i; j<length; j++)
+		{
+			if(a[j]<a[min])
+				min = j;
+		}
+		temp = a[i];
+		a[i] = a[min];
+		a[min] = temp;
+	}
 }
 
 void bubble_sort(int a[], int length)
