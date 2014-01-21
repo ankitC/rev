@@ -6,7 +6,7 @@
 #include <time.h>
 #include <math.h>
 
-void print_list(int a[], int length)
+void print_array(int a[], int length)
 {
 	int i = 0;
 	for(i = 0; i<length; i++)
