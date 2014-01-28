@@ -30,6 +30,54 @@ int max_depth(struct node* node)
 		return left_depth;
 }
 
+
+int min_value(struct node* node)
+{
+	int min_val;
+	int left_value, right_value;
+
+	min_val = node->data;
+
+	if(node->left != NULL)
+	{
+		left_value = min_value(node->left);
+		if(min_val > left_value)
+			min_val = left_value;
+	}
+
+	if(node->right!=NULL)
+	{
+		right_value = min_value(node->right);
+		if(min_val > right_value)
+			min_val = right_value;
+	}
+	return min_val;
+}
+
+int max_value(struct node* node)
+{
+	int max_val;
+	int left_value, right_value;
+
+	max_val = node->data;
+
+	if(node->left != NULL)
+	{
+		left_value = max_value(node->left);
+		if(max_val < left_value)
+			max_val = left_value;
+	}
+
+	if(node->right!=NULL)
+	{
+		right_value = max_value(node->right);
+		if(max_val < right_value)
+			max_val = right_value;
+	}
+	return max_val;
+}
+
+
 void main()
 {
 	struct node* root = build123();
