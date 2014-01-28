@@ -18,6 +18,18 @@ int size(struct node* node)
 }
 
 
+int max_depth(struct node* node)
+{
+	if(node == NULL)
+		return 0;
+	int left_depth = 1+max_depth(node->left);
+	int right_depth = 1+max_depth(node->right);
+	if(right_depth >= left_depth)
+		return right_depth;
+	else
+		return left_depth;
+}
+
 void main()
 {
 	struct node* root = build123();
