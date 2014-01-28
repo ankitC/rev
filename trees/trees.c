@@ -92,9 +92,57 @@ int has_path_sum(struct node* node, int sum)
 	return retval;
 }
 
+void mirror(struct node* node)
+{
+	if(node == NULL)
+		return;
+	struct node* right_node = NULL;
+	struct node* left_node = NULL;
+
+	mirror(node->left);
+	mirror(node->right);
+
+	struct node* temp = node->left;
+	node->left = node->right;
+	node->right = temp;
+
+	return;
+}
+
+void print_paths_recur(struct node* node, int a[], int position)
+{
+	int i = 0;
+	if(node->left == NULL && node->right == NULL)
+	{
+		a[position] = node->data;
+		for(i=0; i<=position; i++)
+			printf("%d\t",a[i]);
+		printf("\n");
+		return;
+	}
+	a[position] = node->data;
+	position++;
+	if(node->left!=NULL)
+		print_paths_recur(node->left, a, position);
+	if(node->right!=NULL)
+		print_paths_recur(node->right,a, position);
+}
+
+void print_paths(struct node* node)
+{
+	int size = max_depth(node);
+	int a[size];
+	int position = 0;
+	//a[position] = node->data;
+	//position++;
+	print_paths_recur(node, a, position);
+}
+
+
 void main()
 {
 	struct node* root = build123();
+	int maxdepth = max_depth(root);
 	root = insert(root, 5);
 	root = insert(root, 9);
 	root = insert(root, 4);
@@ -103,10 +151,7 @@ void main()
 	root = insert(root , 10);
 	print_inorder(root);
 	printf("\n");
-
-	//print_postorder(root);
-	int n = has_path_sum(root, 29);
-	printf("%d\n", n);
+	print_paths(root);
 
 	return;
 }
