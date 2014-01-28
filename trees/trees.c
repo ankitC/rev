@@ -138,20 +138,61 @@ void print_paths(struct node* node)
 	print_paths_recur(node, a, position);
 }
 
+void double_tree(struct node* node)
+{
+	if(node==NULL)
+		return;
+	double_tree(node->left);
+	double_tree(node->right);
+	struct node* new_node1 = new_node(node->data);
+	new_node1->left = node->left;
+	node->left = new_node1;
+}
+
+int same_tree(struct node* a, struct node* b)
+{
+	int right_value = 0, left_value = 0;
+
+	if(a->left!=NULL && b->left!=NULL)
+		left_value = same_tree(a->left, b->left);
+	else if(a->left==NULL && b->left==NULL)
+		left_value = 1;
+
+	if(a->right!=NULL && b->right!=NULL)
+		right_value = same_tree(a->right, b->right);
+	else if(a->right==NULL && b->right==NULL)
+		right_value = 1;
+
+	if(a->data == b->data)
+		return (1 && left_value && right_value);
+	else
+		return 0;
+}
 
 void main()
 {
+	int n = 0;
 	struct node* root = build123();
-	int maxdepth = max_depth(root);
 	root = insert(root, 5);
 	root = insert(root, 9);
 	root = insert(root, 4);
-	//root = insert(root, -2);
 	root = insert(root , 6);
 	root = insert(root , 10);
 	print_inorder(root);
 	printf("\n");
-	print_paths(root);
+//	print_inorder(root);
 
+	struct node* root1 = build123();
+	root1 = insert(root1, 5);
+	root1 = insert(root1 , 10);
+	root1 = insert(root1, 9);
+	root1 = insert(root1, 4);
+	root1 = insert(root1 , 6);
+	print_inorder(root1);
+	printf("\n");
+	//print_inorder(root1);
+
+	n=same_tree(root, root1);
+	printf("Same:%d\n", n);
 	return;
 }
