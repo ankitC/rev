@@ -77,6 +77,20 @@ int max_value(struct node* node)
 	return max_val;
 }
 
+int has_path_sum(struct node* node, int sum)
+{
+	int chksum = sum;
+	int retval = 0;
+	if(node->data == sum && node->right == NULL && node->left == NULL)
+		return 1;
+	chksum = sum - node->data;
+	if(chksum > 0 && node->left!=NULL && !retval)
+		retval = has_path_sum(node->left, chksum);
+
+	if(chksum > 0 && node->right!=NULL && !retval)
+		retval = has_path_sum(node->right, chksum);
+	return retval;
+}
 
 void main()
 {
@@ -85,12 +99,13 @@ void main()
 	root = insert(root, 9);
 	root = insert(root, 4);
 	//root = insert(root, -2);
+	root = insert(root , 6);
 	root = insert(root , 10);
 	print_inorder(root);
 	printf("\n");
 
 	//print_postorder(root);
-	int n = max_value(root);
+	int n = has_path_sum(root, 29);
 	printf("%d\n", n);
 
 	return;
