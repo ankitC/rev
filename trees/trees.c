@@ -152,6 +152,9 @@ void double_tree(struct node* node)
 int same_tree(struct node* a, struct node* b)
 {
 	int right_value = 0, left_value = 0;
+	/* If one of the nodes is NULL while other isn't */
+	if((a == NULL && b!=NULL) || (a!=NULL && b == NULL))
+		return 0;
 
 	if(a->left!=NULL && b->left!=NULL)
 		left_value = same_tree(a->left, b->left);

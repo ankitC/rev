@@ -183,6 +183,7 @@ void main()
 
 }
 
+/* Count the number of times a number occurs in linked list */
 int Count(struct  node* head, int search_for)
 {
 	int count = 0;
@@ -198,6 +199,7 @@ int Count(struct  node* head, int search_for)
 	return count;
 }
 
+/* Get the element at the particular position */
 int get_nth(struct node* head, int position)
 {
 	int i = 0;
@@ -217,6 +219,10 @@ int get_nth(struct node* head, int position)
 	return data;
 }
 
+/* Deleting the entire list.
+ * Take the next node and free the previous.
+ * Make the head NULL.
+ */
 void delete_list(struct node** head)
 {
 	struct node* current = *head;
@@ -232,6 +238,9 @@ void delete_list(struct node** head)
 	return;
 }
 
+/* Pop the element and return it.
+ * Update the head ref to point to next one.
+ */
 int pop(struct node** headRef)
 {
 	struct node* head = *headRef;
@@ -243,6 +252,10 @@ int pop(struct node** headRef)
 	return retval;
 }
 
+/* Insert the element at the nth position.
+ * Check if the length is greater than N.
+ * Travel to the n-1th position.
+ */
 void insert_nth(struct node** headRef, int pos, int element)
 {
 	struct node* head = *headRef;
@@ -270,6 +283,11 @@ void insert_nth(struct node** headRef, int pos, int element)
 	current->next = new_node;
 }
 
+/* Insert in sorted order.
+ * Keep the previous pointer all along.
+ * Corner case: If you are inserting at head, update the head pointer.
+ * Make sure you do not dereference NULL when insertion happens at tail.
+ */
 void sorted_insert(struct node** headRef, struct node* new_node)
 {
 	struct node* current = *headRef;
@@ -311,7 +329,7 @@ void sorted_insert(struct node** headRef, struct node* new_node)
 	return;
 }
 
-
+/* Insert make a new head and call sorted insert.*/
 void insert_sort(struct node** headRef)
 {
 	struct node* head = *headRef;
@@ -328,6 +346,12 @@ void insert_sort(struct node** headRef)
 	*headRef = new_head;
 }
 
+/* Append two Linked lists.
+ * Check if any of the list is NULL.
+ * Run to the end of first list.
+ * Make the last node's next point to new list.
+ * Make the second list's head as NULL.
+ */
 void append(struct node** a, struct node** b)
 {
 	if(*b == NULL)
@@ -346,6 +370,9 @@ void append(struct node** a, struct node** b)
 		*b = NULL;
 }
 
+/* First half to first list.
+ * Second half to the back ref.
+ */
 void front_back_split(struct node* source, struct node** frontRef, struct node** backRef)
 {
 	if(source == NULL)
@@ -363,6 +390,7 @@ void front_back_split(struct node* source, struct node** frontRef, struct node**
 	source->next = NULL;
 }
 
+/* Given a sorted list remove duplicates */
 void remove_duplicates(struct node* head)
 {
 	if(head == NULL||head->next == NULL)
@@ -385,6 +413,7 @@ void remove_duplicates(struct node* head)
 	}while(next_node!=NULL);
 }
 
+/* Take a node from source and put it at the head of the destination */
 void move_node(struct node** dest, struct node** src)
 {
 	if(*src == NULL)
@@ -396,7 +425,7 @@ void move_node(struct node** dest, struct node** src)
 	*dest = temp;
 }
 
-
+/* Push nodes from source to aRef and bRef alternatively */
 void alternating_split(struct node* source, struct node** aRef, struct node** bRef)
 {
 	*aRef = NULL;
@@ -409,6 +438,10 @@ void alternating_split(struct node* source, struct node** aRef, struct node** bR
 	}
 }
 
+/* Alternatively merge a node from each list.
+ * For card shuffle:
+ *		Implement a front back split followed by a shuffle merge.
+ */
 struct node* shuffle_merge(struct node* a, struct node* b)
 {
 	struct node* returned;
@@ -492,6 +525,12 @@ void merge_sort(struct node** headRef)
 	return;
 }
 
+/* Return the reversed list.
+ * Keep the current previous and next.
+ * Update the head at the end.
+ * Check if it is a 2 node list.
+ * Then no need to keep 3 pointers.
+ */
 void reverse(struct node** headRef)
 {
 	struct node* current = *headRef;
